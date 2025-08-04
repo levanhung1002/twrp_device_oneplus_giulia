@@ -16,9 +16,9 @@ BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwr
 
 # Architecture
 TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv9-a
+TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_VARIANT := kryo
+TARGET_CPU_VARIANT := oryon
 
 # Power
 ENABLE_CPUSETS := true
@@ -164,8 +164,7 @@ TW_DEFAULT_LANGUAGE := zh_CN
 TW_EXTRA_LANGUAGES := true
 TW_Y_OFFSET := 1
 TW_H_OFFSET := -1
-TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko goodix_core.ko stm_st54se_gpio.ko nxp-nci.ko"
+TW_LOAD_VENDOR_MODULES := "q6_pdr_dlkm.ko q6_notifier_dlkm.ko snd_event_dlkm.ko gpr_dlkm.ko spf_core_dlkm.ko adsp_loader_dlkm.ko oplus_chg_v2.ko stm_st54se_gpio.ko nxp-nci.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_USE_TOOLBOX := true
-TW_BACKUP_EXCLUSIONS := /data/fonts
