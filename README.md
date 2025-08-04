@@ -19,6 +19,7 @@ git clone  https://github.com//vitaliylysikov/twrp_device_oneplus_giulia device/
 ```
 bash device/oneplus/giulia/patches/apply-patches.sh .
 source build/envsetup.sh
+ build/envsetup.sh
 lunch twrp_giulia-bp2a-eng
 make recoveryimage
 ```
