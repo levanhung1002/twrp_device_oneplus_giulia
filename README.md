@@ -21,7 +21,8 @@ bash device/oneplus/giulia/patches/apply-patches.sh .
 source build/envsetup.sh
  build/envsetup.sh
 lunch twrp_giulia-bp2a-eng
-make recoveryimage
+make installclean
+mka adbd recoveryimage
 ```
 
 
