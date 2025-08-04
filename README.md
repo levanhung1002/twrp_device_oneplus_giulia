@@ -13,7 +13,7 @@ chmod +x repo
 mkdir twrp-16.0 &&cd twrp-16.0
 repo init --depth=1 -u https://github.com/TWRP-Test/platform_manifest_twrp_aosp.git -b twrp-16.0  --depth=1
 repo sync -j16
-git clone  https://github.com//vitaliylysikov/twrp_device_oneplus_giulia device/oneplus/giulia
+git clone --depth=1 https://github.com//vitaliylysikov/twrp_device_oneplus_giulia device/oneplus/giulia
 ```
 
 ```
