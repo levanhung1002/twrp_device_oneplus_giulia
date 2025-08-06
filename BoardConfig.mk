@@ -8,9 +8,10 @@ DEVICE_PATH := device/oneplus/giulia
 
 # Building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
+
+# Rules
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
-
 BUILD_BROKEN_NINJA_USES_ENV_VARS += RTIC_MPGEN
 BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
 
@@ -40,39 +41,31 @@ TARGET_KERNEL_HEADER_ARCH     := arm64
 BOARD_KERNEL_IMAGE_NAME       := Image
 BOARD_BOOT_HEADER_VERSION     := 4
 BOARD_KERNEL_PAGESIZE         := 4096
+TARGET_KERNEL_CLANG_COMPILE   := true
 BOARD_MKBOOTIMG_ARGS          += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS          += --pagesize $(BOARD_KERNEL_PAGESIZE)
 
+# Ramdisk use lz4
 BOARD_RAMDISK_USE_LZ4 := true
 
 # A/B
-AB_OTA_PARTITIONS := \
+BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
+
+AB_OTA_UPDATER := true
+AB_OTA_PARTITIONS += \
     boot \
     init_boot \
     vendor_boot \
     dtbo \
+    vbmeta \
+    vbmeta_system \
     odm \
     product \
     system \
     system_ext \
     system_dlkm \
-    vbmeta \
-    vbmeta_system \
     vendor \
     vendor_dlkm
-
-# AB partitions for oplus
-AB_OTA_PARTITIONS += \
-    my_bigball \
-    my_carrier \
-    my_company \
-    my_engineering \
-    my_heytap \
-    my_manifest \
-    my_preload \
-    my_product \
-    my_region \
-    my_stock
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
@@ -81,18 +74,14 @@ BOARD_AVB_ENABLE := true
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
 
+
+
 # Dynamic Partition
 BOARD_SUPER_PARTITION_SIZE := 14266433536
 BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
 BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 14262239232
-BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := \
-    system system_ext product vendor vendor_dlkm odm
-BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST += \
-    my_bigball my_carrier my_company my_engineering my_heytap my_manifest my_preload my_product my_region my_stock
+BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext product vendor vendor_dlkm odm
 
-BOARD_PARTITION_LIST := $(call to-upper, $(BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST))
-$(foreach p, $(BOARD_PARTITION_LIST), $(eval BOARD_$(p)IMAGE_FILE_SYSTEM_TYPE := erofs))
-$(foreach p, $(BOARD_PARTITION_LIST), $(eval TARGET_COPY_OUT_$(p) := $(call to-lower, $(p))))
 BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # File systems
@@ -103,14 +92,16 @@ TARGET_USERIMAGES_USE_F2FS := true
 # Crypto
 BOARD_USES_METADATA_PARTITION := true
 BOARD_USES_QCOM_FBE_DECRYPTION := true
+TW_INCLUDE_OMAPI := true
+TW_OMAPI_UUID := 636F6D2E6E78702E7365637572697479
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
 
 # Recovery
-BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
+
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-TW_INCLUDE_FASTBOOTD := true
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 
 # Tool
 TW_INCLUDE_LIBRESETPROP := true
@@ -118,6 +109,9 @@ TW_INCLUDE_LPDUMP := true
 TW_INCLUDE_LPTOOLS := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_RESETPROP := true
+
+# Fastbootd
+TW_INCLUDE_FASTBOOTD := true
 
 # Debug
 TARGET_USES_LOGD := true
