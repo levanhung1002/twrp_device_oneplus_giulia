@@ -4,6 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+DEVICE_PATH := device/oneplus/giulia
+
 # Building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
