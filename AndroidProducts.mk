@@ -4,6 +4,10 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/twrp_giulia.mk
+PRODUCT_MAKEFILES := \
+    $(LOCAL_DIR)/twrp_giulia.mk
 
-COMMON_LUNCH_CHOICES := twrp_giulia-eng
+COMMON_LUNCH_CHOICES := \
+    twrp_giulia-user \
+    twrp_giulia-userdebug \
+    twrp_giulia-eng
