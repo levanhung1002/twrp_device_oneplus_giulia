@@ -175,6 +175,6 @@ TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko goodix_ts.ko cs_press_m68.ko cs_press_f71.ko nxp-nci.ko stm_st54se_gpio.ko stm_nfc_i2c.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
-TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone47/temp"
+TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone19/temp"
 TW_BACKUP_EXCLUSIONS := /data/fonts
 TW_DEVICE_VERSION := OnePlus_Ace5-A15
