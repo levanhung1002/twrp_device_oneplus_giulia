@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2018,2020-2021 The Linux Foundation. All rights reserved.
+# Copyright (c) 2017-2023, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -25,58 +25,47 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-on early-init
-    start vendor.gatekeeper_default
-
-service prop-override-script /system/bin/sh -c /vendor/bin/propoverride.sh
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
-on early-fs
-    write /proc/sys/walt/sched_lib_name "recovery,Updater,updater,update_engine_sideload"
-    write /proc/sys/walt/sched_lib_mask_force 255
-
 on init
-    setprop sys.usb.configfs 1
+    setprop prepdecrypt.setpatch true
     start vendor.boot-qti
 
-on property:ro.boot.usbcontroller=*
-    setprop sys.usb.controller ${ro.boot.usbcontroller}
-    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
-    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
-    wait /sys/class/udc/${ro.boot.usbcontroller} 1
+on early-fs
+    write /proc/sys/walt/sched_lib_name "recovery,magiskboot,Updater,updater,update_engine_sideload"
+    write /proc/sys/walt/sched_lib_mask_force 255
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
+    chmod 0660 /dev/qseecom
+    chown system drmrpc /dev/qseecom
+    chmod 0664 /dev/ion
+    chown system system /dev/ion
+    mkdir /mnt/vendor 0775 shell system
+    mkdir /mnt/vendor/persist 0775 shell system
+    mkdir /tmp/persist 0775 shell system
+    mount none /tmp/persist /mnt/vendor/persist bind rec
+    install_keyring
 
-on post-fs
-    start prop-override-script
+on boot
+    setprop sys.usb.config adb
 
 on property:twrp.modules.loaded=true
-    # Mount persist
-    mkdir /mnt/vendor/persist
-    mount ext4 /dev/block/bootdevice/by-name/persist /mnt/vendor/persist ro
     # Mount firmware
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
     # Load ADSP firmware for PMIC
-    wait /sys/kernel/boot_adsp/ssr
+    wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
+    wait /sys/kernel/boot_adsp/ssr
     write /sys/kernel/boot_adsp/ssr 1
     wait /sys/class/power_supply/battery
     start vendor.health-default
-    start vendor.oplus.vibrator
     umount /firmware
+
+on property:ro.crypto.state=encrypted && property:ro.boot.dynamic_partitions=true
+    start prepdecrypt.vendor
 
 on property:hwservicemanager.ready=true
     setprop sys.boot_completed 1
-    chown system system /proc/touchpanel/tp_fw_update
-    write /proc/touchpanel/tp_fw_update 1
-
-on property:vendor.sys.listeners.registered=true
-    start vendor.ssgtzd
-    start vendor.se_omapi
+    start vendor.qti.vibrator
