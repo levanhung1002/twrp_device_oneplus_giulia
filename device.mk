@@ -22,7 +22,7 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 # Shipping API level
 BOARD_SHIPPING_API_LEVEL := 35
 PRODUCT_SHIPPING_API_LEVEL := 35
-PRODUCT_TARGET_VNDK_VERSION := 35
+PPRODUCT_TARGET_VNDK_VERSION := 35
 
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 PRODUCT_ENABLE_UFFD_GC := true
@@ -35,5 +35,9 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
     $(DEVICE_PATH)/security/local_OTA \
     $(DEVICE_PATH)/security/special_OTA
 
+# Enable Fuse Passthrough
+PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true
+
 # Soong namespaces
-PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
+PRODUCT_SOONG_NAMESPACES += \
+    $(DEVICE_PATH)
