@@ -70,6 +70,19 @@ AB_OTA_PARTITIONS += \
     vendor \
     vendor_dlkm
 
+# AB partitions for oplus
+AB_OTA_PARTITIONS += \
+    my_bigball \
+    my_carrier \
+    my_company \
+    my_engineering \
+    my_heytap \
+    my_manifest \
+    my_preload \
+	my_product \
+    my_region \
+    my_stock
+
 # Verified Boot
 BOARD_AVB_ENABLE := true
 
