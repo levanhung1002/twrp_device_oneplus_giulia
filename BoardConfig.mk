@@ -17,9 +17,10 @@ BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwr
 
 # Architecture
 TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv9-a
+TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_VARIANT := kryo
+TARGET_CPU_ABI2 :=
+TARGET_CPU_VARIANT := generic
 
 # Power
 ENABLE_CPUSETS := true
@@ -43,6 +44,7 @@ BOARD_KERNEL_IMAGE_NAME       := Image
 BOARD_BOOT_HEADER_VERSION     := 4
 BOARD_KERNEL_PAGESIZE         := 4096
 TARGET_KERNEL_CLANG_COMPILE   := true
+TARGET_PREBUILT_KERNEL        := $(DEVICE_PATH)/prebuilt/kernel
 BOARD_MKBOOTIMG_ARGS          += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS          += --pagesize $(BOARD_KERNEL_PAGESIZE)
 
@@ -125,14 +127,13 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 
 # Tool
-TW_INCLUDE_LIBRESETPROP := true
-TW_INCLUDE_LPDUMP := true
-TW_INCLUDE_LPTOOLS := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_RESETPROP := true
+TW_INCLUDE_LIBRESETPROP := true
+TW_ENABLE_ALL_PARTITION_TOOLS := true
 
 # F2FS
-TW_ENABLE_FS_COMPRESSION := false
+TW_ENABLE_FS_COMPRESSION := true
 
 # Debug
 TARGET_USES_LOGD := true
@@ -153,13 +154,14 @@ TARGET_RECOVERY_QCOM_RTC_FIX := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_INCLUDE_NTFS_3G := true
 TW_NO_EXFAT_FUSE := true
+TW_USE_DMCTL := true
 TW_USE_TOOLBOX := true
 TARGET_USES_MKE2FS := true
 TW_INCLUDE_FUSE_EXFAT := true
 TW_INCLUDE_FUSE_NTFS := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
-TW_MAX_BRIGHTNESS := 2047
+TW_MAX_BRIGHTNESS := 2048
 TW_EXTRA_LANGUAGES := true
 TW_DEFAULT_LANGUAGE := zh_CN
 TW_DEFAULT_BRIGHTNESS := 500
@@ -171,8 +173,8 @@ TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_SCREEN_BLANK_ON_BOOT := true
-TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko goodix_core.ko stm_st54se_gpio.ko nxp-nci.ko"
+TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko goodix_ts.ko cs_press_m68.ko cs_press_f71.ko nxp-nci.ko stm_st54se_gpio.ko stm_nfc_i2c.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
-TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone1/temp" # CPU-0-0-0
+TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone47/temp"
 TW_BACKUP_EXCLUSIONS := /data/fonts
 TW_DEVICE_VERSION := OnePlus_Ace5-A15
