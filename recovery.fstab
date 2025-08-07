@@ -72,4 +72,4 @@ my_engineering                                          /my_engineering        e
 /dev/block/by-name/oplusreserve2                        /cache                 ext4    nosuid,nodev,noatime,barrier=1,discard               wait,check
 /dev/block/by-name/metadata                             /metadata              f2fs    noatime,nosuid,nodev,discard                         wait,check,formattable
 /dev/block/bootdevice/by-name/userdata                  /data                  f2fs    noatime,nosuid,nodev,discard,reserve_root=32768,resgid=1065,fsync_mode=nobarrier,resize,wait,check,formattable,fileencryption=ice,wrappedkey,keydirectory=/metadata/vold/metadata_encryption,quota,fscompress
-/dev/block/bootdevice/by-name/misc                     /misc                   emmc    defaults                                             defaults
+/dev/block/bootdevice/by-name/misc                      /misc                  emmc    defaults                                             defaults
