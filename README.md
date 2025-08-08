@@ -18,8 +18,8 @@ git clone --depth=1 https://github.com//vitaliylysikov/twrp_device_oneplus_giuli
 
 ```
 source build/envsetup.sh
-lunch twrp_giulia
-make recoveryimage
+lunch twrp_giulia-bp2a-eng
+make -j2 aapt recoveryimage
 ```
 
 
