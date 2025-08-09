@@ -5,12 +5,11 @@ OnePlus Ace 5 (codenamed _"giulia"_) is a high-end smartphone from OnePlus.
 ## Build it yourself?
 
 ```
-mkdir ~/twrp-16.0
-export PATH=~/twrp-16.0:$PATH
-cd ~/twrp-16.0
-curl https://storage.googleapis.com/git-repo-downloads/repo -o repo
-chmod +x repo
-repo init --depth=1 -u https://github.com/TWRP-Test/platform_manifest_twrp_aosp.git -b twrp-16.0  --depth=1
+mkdir -p ~/.bin
+PATH="${HOME}/.bin:${PATH}"
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+chmod a+rx ~/.bin/repo
+repo init --depth=1 -u https://github.com/TWRP-Test/platform_manifest_twrp_aosp.git -b twrp-16.0
 repo sync -j16
 git clone --depth=1 https://github.com//vitaliylysikov/twrp_device_oneplus_giulia device/oneplus/giulia
 ```
