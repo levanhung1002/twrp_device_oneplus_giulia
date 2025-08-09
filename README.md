@@ -11,7 +11,7 @@ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
 chmod a+rx ~/.bin/repo
 repo init --depth=1 -u https://github.com/TWRP-Test/platform_manifest_twrp_aosp.git -b twrp-16.0
 repo sync -j16
-git clone --depth=1 https://github.com/vitaliylysikov/twrp_device_oneplus_giulia/tree/twrp-16.0 device/oneplus/giulia
+git clone --depth=1 https://github.com//vitaliylysikov/twrp_device_oneplus_giulia device/oneplus/giulia
 ```
 
 ```
