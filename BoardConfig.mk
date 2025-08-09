@@ -1,3 +1,4 @@
+
 #
 # Copyright (C) 2025 The Android Open Source Project
 #
@@ -177,14 +178,12 @@ TW_USE_TOOLBOX := true
 TARGET_USES_MKE2FS := true
 TW_INCLUDE_FUSE_EXFAT := true
 TW_INCLUDE_FUSE_NTFS := true
-TW_INPUT_BLACKLIST := "hbtp_vm"
+#TW_INPUT_BLACKLIST := "hbtp_vm" #No recomended to disable
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2048
 TW_EXTRA_LANGUAGES := true
 TW_DEFAULT_LANGUAGE := zh_CN
 TW_DEFAULT_BRIGHTNESS := 500
-TW_Y_OFFSET := 1
-TW_H_OFFSET := -1
 TW_EXCLUDE_APEX := true
 TW_HAS_EDL_MODE := true
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
@@ -193,6 +192,6 @@ TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko goodix_ts.ko cs_press_m68.ko cs_press_f71.ko nxp-nci.ko stm_st54se_gpio.ko stm_nfc_i2c.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
-TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone19/temp"
+#TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone19/temp" # After a few tests u can try to fix that
 TW_BACKUP_EXCLUSIONS := /data/fonts
 TW_DEVICE_VERSION := OnePlus_Ace5-A15
