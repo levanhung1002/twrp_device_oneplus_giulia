@@ -6,6 +6,21 @@
 
 DEVICE_PATH := device/oneplus/giulia
 
+# Inherit from common AOSP config
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+# Inherit some common TWRP stuff.
+$(call inherit-product, vendor/twrp/config/common.mk)
+
+# Configure virtual_ab compression.mk
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression.mk)
+
+# Configure emulated_storage.mk
+$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
 # Inherit from device.mk configuration
 $(call inherit-product, $(DEVICE_PATH)/device.mk)
 
@@ -18,9 +33,6 @@ PRODUCT_NAME := twrp_giulia
 PRODUCT_BRAND := OnePlus
 PRODUCT_MODEL := giulia
 PRODUCT_MANUFACTURER := OnePlus
-
-# Assert
-TARGET_OTA_ASSERT_DEVICE := PKG110,OP5D2BL1,CPH2645,OP5D3BL1,CPH2691,OP5D3BL1
 
 # Theme
 TW_STATUS_ICONS_ALIGN := center
