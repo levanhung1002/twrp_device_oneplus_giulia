@@ -1,0 +1,50 @@
+name: Build TWRP Giulia
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ALLOW_MISSING_DEPENDENCIES: true
+      PATH: ${{ github.workspace }}/bin:${{ env.PATH }}
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup repo tool
+      run: |
+        mkdir -p bin
+        curl https://storage.googleapis.com/git-repo-downloads/repo > bin/repo
+        chmod +x bin/repo
+
+    - name: Initialize repo manifest
+      run: |
+        bin/repo init --depth=1 -u https://github.com/TWRP-Test/platform_manifest_twrp_aosp.git -b twrp-16.0
+
+    - name: Sync repo source
+      run: bin/repo sync -j16
+
+    - name: Clone device tree
+      run: git clone --depth=1 https://github.com/vitaliylysikov/twrp_device_oneplus_giulia device/oneplus/giulia
+
+    - name: Setup python alias
+      run: sudo ln -s $(which python3) /usr/bin/python || true
+
+    - name: Build TWRP recoveryimage
+      run: |
+        source build/envsetup.sh
+        lunch twrp_giulia-bp2a-eng
+        mka recoveryimage
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: twrp_giulia_recovery
+        path: out/target/product/giulia/recovery.img
+
